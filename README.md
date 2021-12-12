@@ -1,5 +1,4 @@
-# CS50W - Programming-With-Python-and-JavaScript
-## AllMyCodes
+## CS50W - Programming-With-Python-and-JavaScript - AllMyCodes
 
 ### Including six projects.
 
