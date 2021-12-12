@@ -1,5 +1,5 @@
-## CS50W - Programming-With-Python-and-JavaScript - AllMyCodes
+## CS50W - Programming-With-Python-and-JavaScript
 
-### Including six projects.
+### AllMyCodes
 
 ### https://cs50.harvard.edu/web/2020/
