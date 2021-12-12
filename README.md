@@ -1,4 +1,4 @@
-## CS50W - Programming-With-Python-and-JavaScript
+## Harvard CS50W - Programming-With-Python-and-JavaScript
 
 ### AllMyCodes
 
