@@ -1,0 +1,164 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+<div class="row mx-2 mt-2 px-2">
+    <h1 class="mx-2">{{ account.username }}'s Profile</h1>
+</div>
+<div class="row mx-2 mt-2 px-2">
+    <div class="col-2 border m-2 p-2">
+        <img id="profile-photo" 
+        src="https://cdn.consumidormoderno.com.br/wp-content/uploads/2019/06/app.jpg">
+    </div>
+    <div class="col-9 m-2 p-2">
+        <div class="row m-0">
+            <div class="col-1 text-center my-0 py-0">
+                <p class="my-0 ml-2 py-0"><strong id="followercount">{{ followers }}</strong></p>
+            </div>
+            <div class="col-1 text-center my-0 py-0">
+                <p class="my-0 ml-2 py-0"><strong>{{ following }}</strong></p>
+            </div>
+        </div>
+    <div class="row mx-0">
+        <div class="col-1 text-center my-0 py-0">
+            {% if followers == 1 %}
+                <p class="my-0 py-0" id="followerlabel">Follower</p>
+            {% else %}
+                <p class="my-0 py-0" id="followerlabel">Followers</p>
+            {% endif %}
+        </div>
+        <div class="col-1 text-center my-0 py-0">
+            <p class="my-0 py-0">Following</p>
+        </div>
+    </div>
+        <div class="row mx-3">
+            <p><strong>Member since {{ account.date_joined }}</strong></p>
+        </div>
+
+        {% if account != user %}
+        
+            <div class="row m-3 px-2" id="followbuttons">
+                {% if follower == False %}
+
+                    <button class="btn btn-primary" data-followerid="{{ user.id }}" data-followeeid="{{ account.id }}" id="follow">Follow</button>
+
+                {% else %}
+
+                    <button class="btn btn-primary" data-followerid="{{ user.id }}" data-followeeid="{{ account.id }}" id="unfollow">Unfollow</button>
+
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+<hr>
+<div class="row m-2 p-2">
+    <h3 class="mx-2 p-2">{{ account.username }}'s posts</h3>
+</div>
+
+{% for post in posts %}
+<div class="container border m-4 p-2">
+    <div class="row m-2 px-2">
+        <a href="/users/{{post.user}}"><h4>{{ post.user }}</h4></a>
+    </div>
+    <div class="row mx-2 px-2">
+        <p class="posttext" id="post-{{ post.id }}">{{ post.postbody }}</p>
+    </div>
+    {% if post.user == user %}
+        <div class="row mx-2 px-2">
+            <p class="posttext editpost" id="editpost-{{ post.id }}" data-postid="{{ post.id }}">Edit</p>
+        </div>
+        <form class="editpostform mx-2 px-2" id="editpostform-{{ post.id }}" action="/editpost" method="post">
+            {% csrf_token %}
+            <textarea name="postbody" class="editpostfield">{{ post.postbody }}</textarea><br>
+            <input type="hidden" name="postid" value="{{ post.id }}">
+            <input type="submit" class="btn btn-primary" value="Apply">
+        </form>
+    {% endif %}
+    <div class="row mx-2 px-2">
+        <p class="text-secondary posttext">{{ post.timestamp }}</p><br>
+    </div>
+
+    {% if user.is_authenticated %}
+
+        {% if post in liked_posts %}
+        
+            <div class="row mx-2 px-2 unlike" data-postid="{{ post.id }}" data-userid="{{ user.id }}">
+                                
+                {% if post.likes.count == 1 %}
+                    <p class="text-secondary posttext" id="likes-{{ post.id }}">{{ post.likes.count }} Like</p><br>
+                {% else %}
+                    <p class="text-secondary posttext" id="likes-{{ post.id }}">{{ post.likes.count }} Likes</p><br>
+                {% endif %}
+            </div>
+
+        {% else %}
+
+            <div class="row mx-2 px-2 like" data-postid="{{ post.id }}" data-userid="{{ user.id }}">
+                                
+                {% if post.likes.count == 1 %}
+                    <p class="text-secondary posttext" id="likes-{{ post.id }}">{{ post.likes.count }} Like</p><br>
+                {% else %}
+                    <p class="text-secondary posttext" id="likes-{{ post.id }}">{{ post.likes.count }} Likes</p><br>
+                {% endif %}
+            </div>
+
+        {% endif %}
+    {% else %}
+        <div class="row mx-2 px-2">
+            <img src="{% static 'network/heart.png' %}" class="icon posttext" id="heart-{{ post.id }}">&nbsp;&nbsp;
+            
+            {% if post.likes.count == 1 %}
+                <p class="text-secondary posttext" id="likes-{{ post.id }}">{{ post.likes.count }} Like</p><br>
+            {% else %}
+                <p class="text-secondary posttext" id="likes-{{ post.id }}">{{ post.likes.count }} Likes</p><br>
+            {% endif %}
+        </div>
+        <div class="row mx-2 px-2">
+            <p><a href="{% url 'login' %}"> You must be logged in... </a></p>
+        </div>
+    {% endif %}
+</div>
+
+
+{% empty %}
+
+<p class="m-2 px-2">No posts yet!</p>
+
+{% endfor %}
+
+    <nav aria-label="Post page navigation">
+        <ul class="pagination justify-content-center">
+            {% if posts.has_previous %}
+
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.previous_page_number }}" tabindex="-1"><<<</a>
+                </li>
+
+            {% else %}
+
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1"><<<</a>
+                </li>
+
+            {% endif %}
+
+            {% if posts.has_next %}
+
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.next_page_number }}" tabindex="-1">>>></a>
+                </li>
+
+            {% else %}
+
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">>>></a>
+                </li>
+
+            {% endif %}
+
+        </ul>
+      </nav>
+
+{% endblock %}

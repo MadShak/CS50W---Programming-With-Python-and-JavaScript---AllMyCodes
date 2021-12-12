@@ -1,0 +1,55 @@
+textarea {
+    min-height: 400px;
+}
+
+.email {
+    border: 2px solid gray;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px #333;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.timestamp {
+    position: static;
+    margin-left: 10px;
+    top: 5px;
+  }
+    
+.sender {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.subject {
+    color: rgb(255, 255, 255);
+    margin-left: 10px;
+}
+
+.email-read {
+    background-color: rgb(93, 204, 255);
+}
+
+.email-unread {
+    background-color: rgb(255, 153, 153);
+}
+
+.email-heading {
+    font-weight: bold;
+}
+
+#email-subject {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#displayemail-view {
+    position: relative;
+}
+
+#email-timestamp {
+    position: absolute;
+    top: 0px;
+    right:  20px;
+}

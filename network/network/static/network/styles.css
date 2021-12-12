@@ -1,0 +1,44 @@
+.editpostfield {
+    width: 700px;
+    height: 300px;
+}
+
+.editpost {
+    color: #150c91;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+}
+
+#postinput {
+    width: 700px;
+    height: 300px;
+}
+
+#submitpost {
+    float: right;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+#postcontainer {
+    width: 800px;
+}
+
+
+.posttext {
+    margin: 6px 0;
+}
+
+#profile-photo {
+    width: 100%;
+    height: auto;
+}
+
+.editpostform {
+    display: none;
+}
